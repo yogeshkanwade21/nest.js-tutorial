@@ -1,0 +1,17 @@
+services:
+  db:
+    image: postgres
+    restart: always
+    volumes:
+      - ./dat/db:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_DB=testDB
+      - POSTGRES_USER=yogesh
+      - POSTGRES_PASSWORD=12345
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - "8080:8080"
