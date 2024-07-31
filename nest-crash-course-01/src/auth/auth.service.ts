@@ -28,6 +28,16 @@ export class AuthService {
         return {
             ...user,
             access_token: this.jwtService.sign(payload),
+            refresh_token: this.jwtService.sign(payload, { expiresIn: '7d' }),
+        };
+    }
+
+    async refreshToken(user: User) {
+        const payload = { email: user.email, sub: {
+            name : user.name,
+        } };
+        return {
+            access_token: this.jwtService.sign(payload),
         };
     }
 }

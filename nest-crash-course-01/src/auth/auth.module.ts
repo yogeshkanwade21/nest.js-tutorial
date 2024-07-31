@@ -7,15 +7,16 @@ import { LocalStrategy } from './stategies/local-strategy';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from 'src/entities/user.entity';
 import { JwtStrategy } from './stategies/jwt-strategy';
+import { RefreshJwtStrategy } from './stategies/refreshToken-strategy';
 
 @Module({
-  providers: [AuthService, UserService, LocalStrategy, UserService, JwtStrategy],
+  providers: [AuthService, UserService, LocalStrategy, UserService, JwtStrategy, RefreshJwtStrategy],
   controllers: [AuthController],
   imports: [
     TypeOrmModule.forFeature([User]),
     JwtModule.register({
       secret: `${process.env.jwt_secret}`,
-      signOptions: { expiresIn: '120s' },
+      signOptions: { expiresIn: '60s' },
   })],
 })
 export class AuthModule {}
