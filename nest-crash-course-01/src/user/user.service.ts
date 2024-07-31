@@ -6,13 +6,19 @@ import { User } from 'src/entities/user.entity';
 
 @Injectable()
 export class UserService {
+
     constructor(@InjectRepository(User) private readonly userRepo: Repository<User>) {}
+    
     async findOne(id: number) {
         return await this.userRepo.findOne({ where: { id } });
     }
 
+    async findOneByEmail(email: string) {
+        return await this.userRepo.findOne({ where: { email } });
+    }
+
     async create(CreateUserDto: CreateUserDto) {
-        const user = await this.userRepo.create(CreateUserDto);
+        const user = this.userRepo.create(CreateUserDto);
         return await this.userRepo.save(user);
     }
 
